@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset ="utf-8">
+<title>Mortgage Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="assets/css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Freckle+Face&family=Indie+Flower&family=Kelly+Slab&family=Nanum+Pen+Script&family=Reenie+Beanie&family=Rock+Salt&family=Yeon+Sung&display=swap" rel="stylesheet">
+<script>
+function doPayment() {
+	let a = parseFloat(document.getElementById('amount').value);
+	let r = parseFloat(document.getElementById('apr').value);
+    let y = parseFloat(document.getElementById('term').value);
+	let payment = computePayment(a, r, y);
+    try{
+        if (isNaN(a)) throw "the amount is empty";
+        if (isNaN(r)) throw "the rate is empty";
+        if (isNaN(y)) throw "the years is empty";
+        if (r<0) throw "rate is less than range";
+        if (r>25) throw "rate is more than range";
+        if (y<0) throw "years is less than range";
+        if (y>40) throw "years is more than range";
+    }
+    catch (err){
+        message.innerHTML="the value of " + err;
+    }
+    message = 'The payment is:$ ' + payment;
+	document.getElementById('output1').innerHTML = message
+}
+function computePayment(am, ap, te) {
+    let i = (ap/(12*100))
+    let n = te*12
+	let payment = (am*(i*(1+i)**n))/(((1+i)**n)-1)
+    var message;
+    message = document.getElementById("output2");
+    message.innerHTML = "";
+    try{
+        if (isNaN(am)) throw "the amount is empty";
+        if (isNaN(ap)) throw "the rate is empty";
+        if (isNaN(te)) throw "the years is empty";
+        if (ap<0) throw "rate is less than range";
+        if (ap>25) throw "rate is more than range";
+        if (te<0) throw "years is less than range";
+        if (te>40) throw "years is more than range";
+    }
+    catch (err){
+        message.innerHTML="the value of " + err;
+    }
+  		return payment.toFixed(2)
+}
+</script>
+</head>
+<body>
+<header>
+    <p class="texto-principal">
+        Welcome
+    </p>
+</header>
+<br>
+<div class="logobox"><a href="https://www.designevo.com/logo-maker/">
+    <img src="assets/images/calcu.png" width="450" height="450" alt="Logo image">
+    </a></div>      
+<form class = "form" action="/action_page.php" method="get">
+<h2 class = "title">Mortgage Calculator</h2>
+<div class = "calculator">
+<div class = "amount1">
+Loan amount ($): <br>
+<input type="text" id="amount" size="7"><br></div><br>
+<div class = "rate">
+APR - Annual Percentage Rate (%):<br>
+<input type="text" id="apr" size="7"><br></div>
+<p class = "range">Please enter the annual percentage rate between 0 - 25%</p>
+<div class = "years">
+Loan Term (years):<br>
+<input type="text" id="term" size="7"><br></div>
+<p class = "range">Please enter the time between 0 - 40 years</p>
+<button class = "button" type="button" onclick="doPayment()">Calculate</button>
+<button class = "button" type="reset" value="Reset">Reset</button>
+<br>
+<br>
+<div id="output1"></div>
+<div id="output2"></div>
+<br>
+</div>
+</form>
+<br>
+<footer>
+    <div class = "name">
+     <p class="copy">&copy; 2020 - Gisela Camaho</p> 
+    </div>
+  </div>
+</footer>
+</body>
+</html>
